@@ -1,0 +1,38 @@
+# Dataset Parameters
+dataset: cityscapes # cityscapes, nassar
+dataset_args:
+  batch_size: 8 # per-gpu
+
+# Augmentation Parameters
+augmentation: custom
+augmentation_args:
+  augmentation_steps:
+    - HorizontalFlip
+    - ColorJitter
+  normalization:
+    # Normalization values generated from pascal_voc_unlabelled
+    mean: [0.45286129, 0.43170348, 0.39989259]
+    std: [0.44426655, 0.46648413, 0.48871749]
+  resize: 256
+
+# Model Parameters
+model: resunet34
+model_args:
+  num_classes: 20 # 21, 19, 3
+  ignore_class: 19
+  pretrain: reconstruction_selective_rec_city/3741/step9/ #todo change this
+
+# Optimizer Parameters (Adam)
+optimizer_args:
+  lr: 3.0e-3
+
+# Scheduler Parameters (Cosine Annealing)
+scheduler_args:
+  min_multiplier: 1.0e-2
+  warmup_epochs: 10
+
+# Training Duration
+epochs: 500
+
+# Superpixel Count
+seg_count: 512

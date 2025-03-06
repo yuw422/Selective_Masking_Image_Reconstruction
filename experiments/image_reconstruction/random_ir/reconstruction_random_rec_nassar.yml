@@ -1,0 +1,40 @@
+# Dataset Parameters
+dataset: nassar_unlabel # imagenet, sugarbeets, pascal_unlabel, pascal_sp_unlabel, imagenet_sp, nassar_unlabel
+dataset_args:
+  batch_size: 256 # per-gpu
+
+# Augmentation Parameters
+augmentation: random_rec_mask # random_rec_mask, random_sp_mask
+augmentation_args:
+  augmentation_steps:
+    - HorizontalFlip
+    - ColorJitter
+  normalization:
+    # Normalization values generated from pascal_voc_unlabelled
+    mean: [ 0.45286129, 0.43170348, 0.39989259 ]
+    std: [ 0.44426655, 0.46648413, 0.48871749 ]
+  resize: 256
+
+# Model Parameters
+model: reconstruction
+model_args:
+  underlying_model: resunet34
+  underlying_model_args:
+    num_classes: 3 # rgb image
+    ignore_class: null
+    pretrain: false
+
+# Optimizer Parameters (Adam)
+optimizer_args:
+  lr: 3.0e-3
+
+# Scheduler Parameters (Cosine Annealing)
+scheduler_args:
+  min_multiplier: 1.0e-2
+  warmup_epochs: 10
+
+# Training Duration
+epochs: 1000
+
+# Patch/Superpixel Count for Masking
+seg_count: 512
